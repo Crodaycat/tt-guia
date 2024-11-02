@@ -1082,7 +1082,7 @@ CREATE TABLE IF NOT EXISTS flower.flowers
 - Modificar el archivo `./src/app/shared/components/flower-card/flower-card.component.ts` con el siguiente contenido:
 
   ```typescript
-  import { Component, Input } from "@angular/core";
+  import { Component, EventEmitter, Input, Output } from "@angular/core";
   import { Flower } from "../../model/flower";
 
   @Component({
@@ -1091,18 +1091,37 @@ CREATE TABLE IF NOT EXISTS flower.flowers
     styleUrl: "./flower-card.component.css",
   })
   export class FlowerCardComponent {
-    @Input() flower!: Flower;
+    @Input()
+    flower?: Flower;
+
+    @Output()
+    onEdit: EventEmitter<Flower> = new EventEmitter<Flower>();
+
+    @Output()
+    onDelete: EventEmitter<Flower> = new EventEmitter<Flower>();
+
+    editFlower() {
+      this.onEdit.emit(this.flower);
+    }
+
+    deleteFlower() {
+      this.onDelete.emit(this.flower);
+    }
   }
   ```
 
 - **Explicación del código:**
 
-  - `@Input() flower!: Flower;`: Define una propiedad de entrada `flower` que recibe un objeto `Flower`.
+  - `@Input() flower?: Flower;`: Define una propiedad de entrada `flower` que recibe un objeto `Flower`. Esta propiedad puede ser opcional.
+  - `@Output() onEdit: EventEmitter<Flower> = new EventEmitter<Flower>();`: Define un evento de salida `onEdit` que emite un objeto `Flower` cuando se llama. Este evento se utiliza para notificar a los componentes padres cuando se desea editar una flor.
+  - `@Output() onDelete: EventEmitter<Flower> = new EventEmitter<Flower>();`: Define un evento de salida `onDelete` que emite un objeto `Flower` cuando se llama. Este evento se utiliza para notificar a los componentes padres cuando se desea eliminar una flor.
+  - `editFlower()`: Método que emite el evento `onEdit` con la flor actual cuando se llama.
+  - `deleteFlower()`: Método que emite el evento `onDelete` con la flor actual cuando se llama.
 
 - Modificar el archivo `./src/app/shared/components/flower-card/flower-card.component.html` con el siguiente contenido:
 
 ```html
-<mat-card class="example-card">
+<mat-card>
   <mat-card-header>
     <mat-card-title>{{ flower?.name }}</mat-card-title>
   </mat-card-header>
@@ -1136,11 +1155,16 @@ CREATE TABLE IF NOT EXISTS flower.flowers
 
 - **Explicación del HTML:**
 
-  - `<mat-card class="example-card">`: Define una tarjeta de Angular Material.
-  - `<mat-card-header>`: Encabezado de la tarjeta que muestra el nombre de la flor.
-  - `<img class="flower-card__image" mat-card-image [src]="flower?.imageUrl" alt="Foto de la flor" />`: Imagen de la flor.
-  - `<mat-card-content class="row mt-3">`: Contenido de la tarjeta que muestra el color y el precio de la flor.
-  - `<mat-card-actions class="d-flex gap-2">`: Acciones de la tarjeta con botones para editar y eliminar la flor.
+  - `<mat-card>`: Define una tarjeta de Angular Material.
+  - `<mat-card-header>`: Encabezado de la tarjeta que contiene el título de la tarjeta.
+  - `<mat-card-title>{{ flower?.name }}</mat-card-title>`: Muestra el nombre de la flor en el encabezado de la tarjeta.
+  - `<img class="flower-card__image" mat-card-image [src]="flower?.imageUrl" alt="Foto de la flor" />`: Muestra la imagen de la flor con la clase `flower-card__image`.
+  - `<mat-card-content class="row mt-3">`: Contenedor para el contenido principal de la tarjeta, con clases de Bootstrap para el diseño.
+  - `<span class="d-block col-12">Color: {{ flower?.color }}</span>`: Muestra el color de la flor.
+  - `<span class="d-block col-12">Precio: {{ flower?.price }}</span>`: Muestra el precio de la flor.
+  - `<mat-card-actions class="d-flex gap-2">`: Contenedor para las acciones de la tarjeta, con clases de Bootstrap para el diseño.
+  - `<button type="button" mat-flat-button color="primary" (click)="editFlower()">Editar</button>`: Botón para editar la flor.
+  - `<button type="button" mat-flat-button color="warn" (click)="deleteFlower()">Eliminar</button>`: Botón para eliminar la flor.
 
 - Modificar el archivo `./src/app/shared/components/flower-card/flower-card.component.css` con el siguiente contenido:
 
