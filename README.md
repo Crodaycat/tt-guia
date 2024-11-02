@@ -876,43 +876,77 @@ CREATE TABLE IF NOT EXISTS flower.flowers
 
     ```html
     <form [formGroup]="flowersForm" (ngSubmit)="submit()">
-      <mat-form-field appearance="outline">
-        <mat-label>Nombre</mat-label>
-        <input matInput formControlName="name" />
-        <mat-error *ngIf="flowersForm.get('name')?.hasError('required')">
-          El nombre es obligatorio.
-        </mat-error>
-      </mat-form-field>
+      <div class="row mb-3">
+        <mat-form-field class="col-12 col-md-6 col-lg-4">
+          <mat-label>Nombre</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="name"
+            placeholder="Ingresa el nombre de la flor"
+          />
 
-      <mat-form-field appearance="outline">
-        <mat-label>Color</mat-label>
-        <input matInput formControlName="color" />
-        <mat-error *ngIf="flowersForm.get('color')?.hasError('required')">
-          El color es obligatorio.
-        </mat-error>
-      </mat-form-field>
+          @if (flowersForm.get('name')?.hasError('required')) {
+          <mat-error>El nombre es <strong>requerido</strong></mat-error>
+          }
+        </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>URL de la Imagen</mat-label>
-        <input matInput formControlName="imageUrl" />
-        <mat-error *ngIf="flowersForm.get('imageUrl')?.hasError('required')">
-          La URL de la imagen es obligatoria.
-        </mat-error>
-      </mat-form-field>
+        <mat-form-field class="col-12 col-md-6 col-lg-4">
+          <mat-label>Color</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="color"
+            placeholder="Ingresa el color de la flor"
+          />
 
-      <mat-form-field appearance="outline">
-        <mat-label>Precio</mat-label>
-        <input matInput formControlName="price" type="number" />
-        <mat-error *ngIf="flowersForm.get('price')?.hasError('required')">
-          El precio es obligatorio.
-        </mat-error>
-        <mat-error *ngIf="flowersForm.get('price')?.hasError('min')">
-          El precio debe ser mayor a 0.
-        </mat-error>
-      </mat-form-field>
+          @if (flowersForm.get('color')?.hasError('required')) {
+          <mat-error>El color es <strong>requerido</strong></mat-error>
+          }
+        </mat-form-field>
+      </div>
 
-      <button mat-raised-button color="primary" type="submit">
-        {{ isEdit ? 'Actualizar' : 'Registrar' }}
+      <div class="row mb-3">
+        <mat-form-field class="col-12 col-md-6 col-lg-4">
+          <mat-label>Imagen</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="imageUrl"
+            placeholder="Ingresa la URL de la imagen de la flor"
+          />
+
+          @if (flowersForm.get('imageUrl')?.hasError('required')) {
+          <mat-error>La imagen es <strong>requerida</strong></mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="col-12 col-md-6 col-lg-4">
+          <mat-label>Precio</mat-label>
+          <input
+            type="number"
+            matInput
+            formControlName="price"
+            placeholder="Ingresa el precio de la flor"
+          />
+
+          @if (flowersForm.get('price')?.hasError('required')) {
+          <mat-error>El precio es <strong>requerido</strong></mat-error>
+          } @if (flowersForm.get('price')?.hasError('min')) {
+          <mat-error
+            >El precio debe ser <strong>mayor</strong> a cero
+          </mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <button
+        type="submit"
+        mat-flat-button
+        color="primary"
+        [disabled]="flowersForm.invalid"
+      >
+        {{ isEdit ? "Actualizar" : "Registrar" }}
       </button>
     </form>
     ```
