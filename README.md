@@ -773,7 +773,7 @@ CREATE TABLE IF NOT EXISTS flower.flowers
     export class SharedModule {}
     ```
 
-14. **Crear el Formulario de Registro de Flores**
+    14. **Crear el Formulario de Registro de Flores**
 
     - Modificar el archivo `./src/app/shared/shared.module.ts` con el siguiente contenido:
 
@@ -817,6 +817,13 @@ CREATE TABLE IF NOT EXISTS flower.flowers
     })
     export class SharedModule {}
     ```
+
+    **Explicación del código:**
+
+    - Se agregó la importación del módulo `ReactiveFormsModule` para manejar formularios reactivos.
+    - Se agregó la importación del módulo `MatInputModule` para utilizar los campos de entrada de Angular Material.
+    - Se declaró y exportó el componente `FlowersFormComponent` para que pueda ser utilizado en otros módulos.
+    - Se agregó un proveedor para `MAT_FORM_FIELD_DEFAULT_OPTIONS` con el valor `{ appearance: "outline" }` para establecer la apariencia predeterminada de los campos de formulario de Angular Material.
 
     - Modificar el archivo `./src/app/shared/components/flowers-form/flowers-form.component.ts` con el siguiente contenido:
 
@@ -872,6 +879,15 @@ CREATE TABLE IF NOT EXISTS flower.flowers
     }
     ```
 
+    **Explicación del código:**
+
+    - `@Input() set defaultValue(value: Flower)`: Este decorador de entrada permite establecer un valor predeterminado para el formulario. Cuando se establece un valor, se llama al método `intilizeForm` para inicializar el formulario con ese valor.
+    - `@Input() isEdit = false`: Este decorador de entrada indica si el formulario está en modo de edición.
+    - `@Output() onSubmit: EventEmitter<Flower> = new EventEmitter<Flower>();`: Este decorador de salida emite un evento `onSubmit` con un objeto `Flower` cuando se envía el formulario.
+    - `constructor(private formBuilder: FormBuilder)`: El constructor inyecta el servicio `FormBuilder` para crear el formulario reactivo.
+    - `intilizeForm(defaultValue?: Flower)`: Este método inicializa el formulario con valores predeterminados. Si se proporciona un valor predeterminado, se utiliza para inicializar los campos del formulario.
+    - `submit()`: Este método se llama cuando se envía el formulario. Si el formulario es válido, emite el evento `onSubmit` con los valores del formulario.
+
     - Modificar el archivo `./src/app/shared/components/flowers-form/flowers-form.component.html` con el siguiente contenido:
 
     ```html
@@ -885,10 +901,9 @@ CREATE TABLE IF NOT EXISTS flower.flowers
             formControlName="name"
             placeholder="Ingresa el nombre de la flor"
           />
-
-          @if (flowersForm.get('name')?.hasError('required')) {
-          <mat-error>El nombre es <strong>requerido</strong></mat-error>
-          }
+          <mat-error *ngIf="flowersForm.get('name')?.hasError('required')">
+            El nombre es <strong>requerido</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="col-12 col-md-6 col-lg-4">
@@ -899,10 +914,9 @@ CREATE TABLE IF NOT EXISTS flower.flowers
             formControlName="color"
             placeholder="Ingresa el color de la flor"
           />
-
-          @if (flowersForm.get('color')?.hasError('required')) {
-          <mat-error>El color es <strong>requerido</strong></mat-error>
-          }
+          <mat-error *ngIf="flowersForm.get('color')?.hasError('required')">
+            El color es <strong>requerido</strong>
+          </mat-error>
         </mat-form-field>
       </div>
 
@@ -915,10 +929,9 @@ CREATE TABLE IF NOT EXISTS flower.flowers
             formControlName="imageUrl"
             placeholder="Ingresa la URL de la imagen de la flor"
           />
-
-          @if (flowersForm.get('imageUrl')?.hasError('required')) {
-          <mat-error>La imagen es <strong>requerida</strong></mat-error>
-          }
+          <mat-error *ngIf="flowersForm.get('imageUrl')?.hasError('required')">
+            La imagen es <strong>requerida</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="col-12 col-md-6 col-lg-4">
@@ -929,14 +942,12 @@ CREATE TABLE IF NOT EXISTS flower.flowers
             formControlName="price"
             placeholder="Ingresa el precio de la flor"
           />
-
-          @if (flowersForm.get('price')?.hasError('required')) {
-          <mat-error>El precio es <strong>requerido</strong></mat-error>
-          } @if (flowersForm.get('price')?.hasError('min')) {
-          <mat-error
-            >El precio debe ser <strong>mayor</strong> a cero
+          <mat-error *ngIf="flowersForm.get('price')?.hasError('required')">
+            El precio es <strong>requerido</strong>
           </mat-error>
-          }
+          <mat-error *ngIf="flowersForm.get('price')?.hasError('min')">
+            El precio debe ser <strong>mayor</strong> a cero
+          </mat-error>
         </mat-form-field>
       </div>
 
@@ -951,7 +962,22 @@ CREATE TABLE IF NOT EXISTS flower.flowers
     </form>
     ```
 
-15. **Página de Creación de Flores**
+    **Explicación del HTML:**
+
+    - `<form [formGroup]="flowersForm" (ngSubmit)="submit()">`: Define un formulario que utiliza `ReactiveForms` de Angular. El formulario se enviará cuando se haga clic en el botón de envío.
+    - `<div class="row mb-3">`: Contenedor para los campos del formulario, con clases de Bootstrap para el diseño.
+    - `<mat-form-field class="col-12 col-md-6 col-lg-4">`: Campo de formulario de Angular Material con clases de Bootstrap para el diseño.
+    - `<mat-label>Nombre</mat-label>`: Etiqueta del campo de formulario.
+    - `<input type="text" matInput formControlName="name" placeholder="Ingresa el nombre de la flor" />`: Campo de entrada para el nombre de la flor.
+    - `<mat-error *ngIf="flowersForm.get('name')?.hasError('required')">`: Mensaje de error que se muestra si el campo `name` es requerido y no se ha completado.
+    - `<mat-error *ngIf="flowersForm.get('color')?.hasError('required')">`: Mensaje de error que se muestra si el campo `color` es requerido y no se ha completado.
+    - `<mat-error *ngIf="flowersForm.get('imageUrl')?.hasError('required')">`: Mensaje de error que se muestra si el campo `imageUrl` es requerido y no se ha completado.
+    - `<mat-error *ngIf="flowersForm.get('price')?.hasError('required')">`: Mensaje de error que se muestra si el campo `price` es requerido y no se ha completado.
+    - `<mat-error *ngIf="flowersForm.get('price')?.hasError('min')">`: Mensaje de error que se muestra si el valor del campo `price` es menor que el mínimo permitido.
+    - `<button type="submit" mat-flat-button color="primary" [disabled]="flowersForm.invalid">`: Botón de envío del formulario. Se deshabilita si el formulario no es válido.
+    - `{{ isEdit ? "Actualizar" : "Registrar" }}`: Texto del botón que cambia según si se está editando o registrando una flor.
+
+14. **Página de Creación de Flores**
 
     - Vamos a crear la página para registrar flores. Modificamos el archivo `./src/app/pages/flowers-create-page/flowers-create-page.component.ts` con el siguiente contenido:
 
@@ -1026,7 +1052,7 @@ CREATE TABLE IF NOT EXISTS flower.flowers
       - `<h1>Registrar flor</h1>`: Título de la página.
       - `<app-flowers-form (onSubmit)="onSubmit($event)"></app-flowers-form>`: Utiliza el componente `FlowersFormComponent` y maneja el evento `onSubmit` para crear una nueva flor.
 
-16. **Crear Componente Flower Card**
+15. **Crear Componente Flower Card**
 
 - Modificar el archivo `./src/app/shared/shared.module.ts` para declarar y exportar el componente `FlowerCardComponent`:
 
@@ -1273,7 +1299,7 @@ CREATE TABLE IF NOT EXISTS flower.flowers
   <h1>Listado de flores</h1>
 
   <section class="flowers-list">
-    <div class="row">
+    <div class="row w-100">
       <div class="col-12 col-md-4 col-lg-3" *ngFor="let flower of flowers">
         <app-flower-card
           [flower]="flower"
@@ -1422,3 +1448,7 @@ CREATE TABLE IF NOT EXISTS flower.flowers
   - `<ng-container *ngIf="!isLoading; else loadingContainer">`: Contenedor que muestra el formulario de edición si `isLoading` es `false`.
   - `<app-flowers-form *ngIf="!!flower" [isEdit]="true" [defaultValue]="flower" (onSubmit)="onSubmit($event)"></app-flowers-form>`: Utiliza el componente `FlowersFormComponent` y maneja el evento `onSubmit` para actualizar la información de la flor.
   - `<ng-template #loadingContainer> Cargando... </ng-template>`: Plantilla que muestra un mensaje de carga si `isLoading` es `true`.
+
+> **Importante:** En este punto te recomiendo detener la ejecucion de la aplicacion usando `ctrl + c` en la terminal donde ejecutaste `npm start` y que vuelvas a ejecutar el comando para volver a iniciar la app.
+
+Ahora puedes probar la aplicación y realizar todas las acciones programadas: crear, listar, editar y eliminar.
