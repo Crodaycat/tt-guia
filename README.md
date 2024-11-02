@@ -649,7 +649,7 @@ CREATE TABLE IF NOT EXISTS flower.flowers
 
     Este comando creará automáticamente los archivos `environment.ts` y `environment.prod.ts` dentro de la carpeta `src/environments`.
 
-    - El archivo `environment.ts` tendrá el siguiente contenido:
+    - El archivo `environment.development.ts` tendrá el siguiente contenido:
 
     ```typescript
     export const environment = {
@@ -658,7 +658,7 @@ CREATE TABLE IF NOT EXISTS flower.flowers
     };
     ```
 
-    - El archivo `environment.prod.ts` tendrá el siguiente contenido:
+    - El archivo `environment.ts` tendrá el siguiente contenido:
 
     ```typescript
     export const environment = {
@@ -669,7 +669,64 @@ CREATE TABLE IF NOT EXISTS flower.flowers
 
     > Nota: A la hora de querer publicar tu aplicacion a internet debes modificar el `environment.prod.ts` para utilizar tu apiUrl con la ruta en internet. Ejemplo: `https://mi-dominio.com`
 
-12. **Crear Servicio para la Comunicación con el Backend**
+    > **Importante:** En este punto te recomiendo detener la ejecucion de la aplicacion usando `ctrl + c` en la terminal donde ejecutaste `npm start` y que vuelvas a ejecutar el comando para volver a iniciar la app.
+
+12. **Crear el archivo `Flower.ts`**
+
+    1. **Crear el archivo `Flower.ts`**
+
+    - Navega a la carpeta `src/app/shared/model` y crea un archivo llamado `Flower.ts`.
+
+    2. **Definir la interfaz `Flower`**
+
+    - Abre el archivo `Flower.ts` y define la interfaz `Flower` con el siguiente contenido:
+
+    ```typescript
+    export interface Flower {
+      id?: number;
+      name: string;
+      color: string;
+      imageUrl: string;
+      price: number;
+    }
+    ```
+
+    - **Explicación del código:**
+      - `id?`: Propiedad opcional que representa el identificador único de la flor.
+      - `name`: Propiedad que representa el nombre de la flor.
+      - `color`: Propiedad que representa el color de la flor.
+      - `imageUrl`: Propiedad que representa la URL de la imagen de la flor.
+      - `price`: Propiedad que representa el precio de la flor.
+
+    3. **Importar la interfaz `Flower`**
+
+    - Asegúrate de importar la interfaz `Flower` en los archivos donde sea necesario, como en los servicios, componentes y formularios que interactúan con los datos de las flores.
+
+    ```typescript
+    import { Flower } from "../model/Flower";
+    ```
+
+    - **Nota:** La ruta de importación puede variar según la ubicación del archivo en el que estés trabajando.
+
+    4. **Utilizar la interfaz `Flower`**
+
+    - Utiliza la interfaz `Flower` para definir los tipos de datos en los servicios, componentes y formularios que manejan la información de las flores. Esto ayudará a garantizar que los datos sean consistentes y facilitará el desarrollo y mantenimiento del código.
+
+    ```typescript
+    export class FlowersApiService {
+      // Ejemplo de uso de la interfaz Flower
+      findAll(): Observable<Flower[]> {
+        return this.client.get<Flower[]>(`${environment.apiUrl}/flowers`);
+      }
+    }
+    ```
+
+    - **Explicación del código:**
+      - En este ejemplo, el método `findAll` del servicio `FlowersApiService` devuelve un observable de un arreglo de objetos `Flower`.
+
+    Siguiendo estos pasos, habrás creado y utilizado correctamente la interfaz `Flower` en tu proyecto Angular.
+
+13. **Crear Servicio para la Comunicación con el Backend**
 
     - Modificar el archivo `src/app/shared/services/flowers-api.service.ts` con el siguiente contenido:
 
@@ -734,14 +791,7 @@ CREATE TABLE IF NOT EXISTS flower.flowers
 
     @NgModule({
       declarations: [NavComponent],
-      imports: [
-        CommonModule,
-        MatToolbarModule,
-        RouterModule,
-        MatButtonModule,
-        ReactiveFormsModule,
-        MatInputModule,
-      ],
+      imports: [CommonModule, MatToolbarModule, RouterModule, MatButtonModule],
       exports: [NavComponent],
       providers: [
         provideHttpClient(withInterceptorsFromDi()),
@@ -751,7 +801,7 @@ CREATE TABLE IF NOT EXISTS flower.flowers
     export class SharedModule {}
     ```
 
-13. **Crear el Formulario de Registro de Flores**
+14. **Crear el Formulario de Registro de Flores**
 
     - Modificar el archivo `./src/app/shared/shared.module.ts` con el siguiente contenido:
 
@@ -895,7 +945,7 @@ CREATE TABLE IF NOT EXISTS flower.flowers
     </form>
     ```
 
-14. **Página de Creación de Flores**
+15. **Página de Creación de Flores**
 
     - Vamos a crear la página para registrar flores. Modificamos el archivo `./src/app/pages/flowers-create-page/flowers-create-page.component.ts` con el siguiente contenido:
 
@@ -970,7 +1020,7 @@ CREATE TABLE IF NOT EXISTS flower.flowers
       - `<h1>Registrar flor</h1>`: Título de la página.
       - `<app-flowers-form (onSubmit)="onSubmit($event)"></app-flowers-form>`: Utiliza el componente `FlowersFormComponent` y maneja el evento `onSubmit` para crear una nueva flor.
 
-15. **Crear Componente Flower Card**
+16. **Crear Componente Flower Card**
 
 - Modificar el archivo `./src/app/shared/shared.module.ts` para declarar y exportar el componente `FlowerCardComponent`:
 
