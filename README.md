@@ -671,15 +671,15 @@ CREATE TABLE IF NOT EXISTS flower.flowers
 
     > **Importante:** En este punto te recomiendo detener la ejecucion de la aplicacion usando `ctrl + c` en la terminal donde ejecutaste `npm start` y que vuelvas a ejecutar el comando para volver a iniciar la app.
 
-12. **Crear el archivo `Flower.ts`**
+12. **Crear el archivo `flower.ts`**
 
-    1. **Crear el archivo `Flower.ts`**
+    1. **Crear el archivo `flower.ts`**
 
-    - Navega a la carpeta `src/app/shared/model` y crea un archivo llamado `Flower.ts`.
+    - Navega a la carpeta `src/app/shared/model` y crea un archivo llamado `flower.ts`.
 
-    2. **Definir la interfaz `Flower`**
+    2. **Definir la interfaz `flower`**
 
-    - Abre el archivo `Flower.ts` y define la interfaz `Flower` con el siguiente contenido:
+    - Abre el archivo `flower.ts` y define la interfaz `Flower` con el siguiente contenido:
 
     ```typescript
     export interface Flower {
@@ -697,34 +697,6 @@ CREATE TABLE IF NOT EXISTS flower.flowers
       - `color`: Propiedad que representa el color de la flor.
       - `imageUrl`: Propiedad que representa la URL de la imagen de la flor.
       - `price`: Propiedad que representa el precio de la flor.
-
-    3. **Importar la interfaz `Flower`**
-
-    - Asegúrate de importar la interfaz `Flower` en los archivos donde sea necesario, como en los servicios, componentes y formularios que interactúan con los datos de las flores.
-
-    ```typescript
-    import { Flower } from "../model/Flower";
-    ```
-
-    - **Nota:** La ruta de importación puede variar según la ubicación del archivo en el que estés trabajando.
-
-    4. **Utilizar la interfaz `Flower`**
-
-    - Utiliza la interfaz `Flower` para definir los tipos de datos en los servicios, componentes y formularios que manejan la información de las flores. Esto ayudará a garantizar que los datos sean consistentes y facilitará el desarrollo y mantenimiento del código.
-
-    ```typescript
-    export class FlowersApiService {
-      // Ejemplo de uso de la interfaz Flower
-      findAll(): Observable<Flower[]> {
-        return this.client.get<Flower[]>(`${environment.apiUrl}/flowers`);
-      }
-    }
-    ```
-
-    - **Explicación del código:**
-      - En este ejemplo, el método `findAll` del servicio `FlowersApiService` devuelve un observable de un arreglo de objetos `Flower`.
-
-    Siguiendo estos pasos, habrás creado y utilizado correctamente la interfaz `Flower` en tu proyecto Angular.
 
 13. **Crear Servicio para la Comunicación con el Backend**
 
