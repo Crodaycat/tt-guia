@@ -458,447 +458,444 @@ CREATE TABLE IF NOT EXISTS flower.flowers
         driver-class-name: org.postgresql.Driver
     ```
 
-    ## Front-end
+## Front-end
 
-    1. **Generar la Aplicación**
+1. **Generar la Aplicación**
 
-       - Ejecutar el comando `ng new flowers-store`.
+   - Ejecutar el comando `ng new flowers-store`.
 
-    2. **Instalar Angular Material**
+2. **Instalar Angular Material**
 
-       - Ejecutar el comando `ng add angular-material@17`.
+   - Ejecutar el comando `ng add @angular/material@17`.
 
-       > **Nota:** Se utiliza Angular Material versión 17 ya que la versión 18 aún no tiene todos los estilos completamente integrados.
+   > **Nota:** Se utiliza Angular Material versión 17 ya que la versión 18 aún no tiene todos los estilos completamente integrados.
+   > **Nota2:** El comando se debe ejecutar dentro de la carpeta del nuevo proyecto genera que se llama `flowers-store`.
 
-    3. **Agregar Bootstrap**
+3. **Agregar Bootstrap**
 
-       - En el archivo `index.html` en la sección `<head>...</head>` agregar el link a los estilos:
+   - En el archivo `index.html` en la sección `<head>...</head>` agregar el link a los estilos:
 
-       ```html
-       <head>
-         ...
-         <link
-           href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-           rel="stylesheet"
-           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-           crossorigin="anonymous"
-         />
-         <script
-           src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-           integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-           crossorigin="anonymous"
-         ></script>
-         ...
-       </head>
-       ```
+   ```html
+   <head>
+     ...
+     <link
+       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+       rel="stylesheet"
+       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+       crossorigin="anonymous"
+     />
+     <script
+       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+       crossorigin="anonymous"
+     ></script>
+     ...
+   </head>
+   ```
 
-       > **Nota:** La ubicación de este archivo es `./src/index.html`.
+   > **Nota:** La ubicación de este archivo es `./src/index.html`.
 
-    4. **Crear Módulo Compartido**
+4. **Crear Módulo Compartido**
 
-       - Ejecutar el comando `ng generate module shared`.
+   - Ejecutar el comando `ng generate module shared`.
 
-    5. **Crear Páginas**
+5. **Crear Páginas**
 
-       - Ejecutar los siguientes comandos:
+   - Ejecutar los siguientes comandos:
 
-       ```text
-       ng generate component pages/flowers-create-page
-       ng generate component pages/flowers-edit-page
-       ng generate component pages/flowers-list-page
-       ```
+   ```text
+   ng generate component pages/flowers-create-page
+   ng generate component pages/flowers-edit-page
+   ng generate component pages/flowers-list-page
+   ```
 
-    6. **Crear Componentes Compartidos**
+6. **Crear Componentes Compartidos**
 
-       - Ejecutar los siguientes comandos:
+   - Ejecutar los siguientes comandos:
 
-       ```text
-       ng generate component shared/components/flower-card
-       ng generate component shared/components/flowers-form
-       ng generate component shared/components/nav
-       ```
+   ```text
+   ng generate component shared/components/flower-card
+   ng generate component shared/components/flowers-form
+   ng generate component shared/components/nav
+   ```
 
-    7. **Crear Servicio**
+7. **Crear Servicio**
 
-       - Ejecutar el comando:
+   - Ejecutar el comando:
 
-       ```text
-       ng generate service shared/services/flowers-api
-       ```
+   ```text
+   ng generate service shared/services/flowers-api
+   ```
 
-    8. **Ejecutar la Aplicación**
+8. **Crear Servicio**
 
-       - Para iniciar la aplicación, ejecuta el comando `npm start` en la terminal.
-       - Una vez que la aplicación esté en ejecución, abre tu navegador y navega a `http://localhost:4200` para acceder a la página web desplegada localmente.
+   - Ejecutar el comando:
 
-    9. **Crear Barra de Navegación y Configurar Rutas de la Aplicación**
+   ```text
+   ng generate module shared
+   ```
 
-       - Eliminar todo el contenido del archivo `./src/app/app.component.html` y agregar el siguiente contenido:
+9. **Ejecutar la Aplicación**
 
-       ```html
-       <app-nav></app-nav>
+   - Para iniciar la aplicación, ejecuta el comando `npm start` en la terminal.
+   - Una vez que la aplicación esté en ejecución, abre tu navegador y navega a `http://localhost:4200` para acceder a la página web desplegada localmente.
 
-       <section class="container py-4">
-         <router-outlet></router-outlet>
-       </section>
-       ```
+10. **Crear Barra de Navegación y Configurar Rutas de la Aplicación**
 
-       - Modificar el archivo `./src/app/app.component.ts` con el siguiente contenido:
+- Eliminar todo el contenido del archivo `./src/app/app.component.html` y agregar el siguiente contenido:
 
-       ```typescript
-       import { Component } from "@angular/core";
-       import { RouterOutlet } from "@angular/router";
-       import { SharedModule } from "./shared/shared.module";
+  ```html
+  <app-nav></app-nav>
 
-       @Component({
-         standalone: true,
-         selector: "app-root",
-         imports: [RouterOutlet, SharedModule],
-         templateUrl: "./app.component.html",
-         styleUrl: "./app.component.css",
-       })
-       export class AppComponent {
-         title = "flowers-store";
-       }
-       ```
+  <section class="container py-4">
+    <router-outlet></router-outlet>
+  </section>
+  ```
 
-       - Modificar el archivo `./src/app/shared/shared.module.ts` con el siguiente contenido:
+  - Modificar el archivo `./src/app/app.component.ts` con el siguiente contenido:
 
-       ```typescript
-       import { CommonModule } from "@angular/common";
-       import { NgModule } from "@angular/core";
-       import { MatButtonModule } from "@angular/material/button";
-       import { MatToolbarModule } from "@angular/material/toolbar";
-       import { RouterModule } from "@angular/router";
-       import { NavComponent } from "./components/nav/nav.component";
+  ```typescript
+  import { Component } from "@angular/core";
+  import { RouterOutlet } from "@angular/router";
+  import { SharedModule } from "./shared/shared.module";
 
-       @NgModule({
-         declarations: [NavComponent],
-         imports: [
-           CommonModule,
-           MatToolbarModule,
-           RouterModule,
-           MatButtonModule,
-         ],
-         exports: [NavComponent],
-       })
-       export class SharedModule {}
-       ```
+  @Component({
+    standalone: true,
+    selector: "app-root",
+    imports: [RouterOutlet, SharedModule],
+    templateUrl: "./app.component.html",
+    styleUrl: "./app.component.css",
+  })
+  export class AppComponent {
+    title = "flowers-store";
+  }
+  ```
 
-       - Modificar el archivo `./src/app/shared/components/nav/nav.component.html` con el siguiente contenido:
+  - Modificar el archivo `./src/app/shared/shared.module.ts` con el siguiente contenido:
 
-       ```html
-       <mat-toolbar color="primary" class="nav-bar">
-         <span>La florecita</span>
+  ```typescript
+  import { CommonModule } from "@angular/common";
+  import { NgModule } from "@angular/core";
+  import { MatButtonModule } from "@angular/material/button";
+  import { MatToolbarModule } from "@angular/material/toolbar";
+  import { RouterModule } from "@angular/router";
+  import { NavComponent } from "./components/nav/nav.component";
 
-         <a mat-button routerLink="/flowers" routerLinkActive="active-link"
-           >Flores</a
-         >
-         <a
-           mat-button
-           routerLink="/flowers/create"
-           routerLinkActive="active-link"
-           >Registrar flores</a
-         >
-       </mat-toolbar>
-       ```
+  @NgModule({
+    declarations: [NavComponent],
+    imports: [CommonModule, MatToolbarModule, RouterModule, MatButtonModule],
+    exports: [NavComponent],
+  })
+  export class SharedModule {}
+  ```
 
-       - Modificar el archivo `./src/app/shared/components/nav/nav.component.ts` con el siguiente contenido:
+  - Modificar el archivo `./src/app/shared/components/nav/nav.component.html` con el siguiente contenido:
 
-       ```typescript
-       import { Component } from "@angular/core";
+  ```html
+  <mat-toolbar color="primary" class="nav-bar">
+    <span>La florecita</span>
 
-       @Component({
-         selector: "app-nav",
-         templateUrl: "./nav.component.html",
-         styleUrl: "./nav.component.css",
-       })
-       export class NavComponent {}
-       ```
+    <a mat-button routerLink="/flowers" routerLinkActive="active-link"
+      >Flores</a
+    >
+    <a mat-button routerLink="/flowers/create" routerLinkActive="active-link"
+      >Registrar flores</a
+    >
+  </mat-toolbar>
+  ```
 
-       - Modificar el archivo `./src/app/app.routes.ts` con el siguiente contenido:
+  - Modificar el archivo `./src/app/shared/components/nav/nav.component.ts` con el siguiente contenido:
 
-       ```typescript
-       import { Routes } from "@angular/router";
-       import { FlowersCreatePageComponent } from "./pages/flowers-create-page/flowers-create-page.component";
-       import { FlowersEditPageComponent } from "./pages/flowers-edit-page/flowers-edit-page.component";
-       import { FlowersListPageComponent } from "./pages/flowers-list-page/flowers-list-page.component";
+  ```typescript
+  import { Component } from "@angular/core";
 
-       export const routes: Routes = [
-         {
-           path: "flowers",
-           component: FlowersListPageComponent,
-         },
-         { path: "flowers/create", component: FlowersCreatePageComponent },
-         {
-           path: "flowers/:flowerId/edit",
-           component: FlowersEditPageComponent,
-         },
-         { path: "**", redirectTo: "/flowers" },
-       ];
-       ```
+  @Component({
+    selector: "app-nav",
+    templateUrl: "./nav.component.html",
+    styleUrl: "./nav.component.css",
+  })
+  export class NavComponent {}
+  ```
 
-    10. **Crear Carpeta de Entornos**
+  - Modificar el archivo `./src/app/app.routes.ts` con el siguiente contenido:
 
-        - En Angular 18, puedes generar la carpeta de entornos (`environments`) utilizando el siguiente comando de Angular CLI:
+  ```typescript
+  import { Routes } from "@angular/router";
+  import { FlowersCreatePageComponent } from "./pages/flowers-create-page/flowers-create-page.component";
+  import { FlowersEditPageComponent } from "./pages/flowers-edit-page/flowers-edit-page.component";
+  import { FlowersListPageComponent } from "./pages/flowers-list-page/flowers-list-page.component";
 
-        ```bash
-        ng generate environments
-        ```
+  export const routes: Routes = [
+    {
+      path: "flowers",
+      component: FlowersListPageComponent,
+    },
+    { path: "flowers/create", component: FlowersCreatePageComponent },
+    {
+      path: "flowers/:flowerId/edit",
+      component: FlowersEditPageComponent,
+    },
+    { path: "**", redirectTo: "/flowers" },
+  ];
+  ```
 
-        Este comando creará automáticamente los archivos `environment.ts` y `environment.prod.ts` dentro de la carpeta `src/environments`.
+11. **Crear Carpeta de Entornos**
 
-        - El archivo `environment.ts` tendrá el siguiente contenido:
+    - En Angular 18, puedes generar la carpeta de entornos (`environments`) utilizando el siguiente comando de Angular CLI:
 
-        ```typescript
-        export const environment = {
-          production: false,
-          apiUrl: "http://localhost:18100",
+    ```bash
+    ng generate environments
+    ```
+
+    Este comando creará automáticamente los archivos `environment.ts` y `environment.prod.ts` dentro de la carpeta `src/environments`.
+
+    - El archivo `environment.ts` tendrá el siguiente contenido:
+
+    ```typescript
+    export const environment = {
+      production: false,
+      apiUrl: "http://localhost:18100",
+    };
+    ```
+
+    - El archivo `environment.prod.ts` tendrá el siguiente contenido:
+
+    ```typescript
+    export const environment = {
+      production: true,
+      apiUrl: "http://localhost:18100",
+    };
+    ```
+
+    > Nota: A la hora de querer publicar tu aplicacion a internet debes modificar el `environment.prod.ts` para utilizar tu apiUrl con la ruta en internet. Ejemplo: `https://mi-dominio.com`
+
+12. **Crear Servicio para la Comunicación con el Backend**
+
+    - Modificar el archivo `src/app/shared/services/flowers-api.service.ts` con el siguiente contenido:
+
+    ```typescript
+    import { HttpClient } from "@angular/common/http";
+    import { Injectable } from "@angular/core";
+    import { Observable } from "rxjs";
+    import { environment } from "../../../environments/environment";
+    import { Flower } from "../model/flower";
+
+    @Injectable({
+      providedIn: "root",
+    })
+    export class FlowersApiService {
+      constructor(private client: HttpClient) {}
+
+      findAll(): Observable<Flower[]> {
+        return this.client.get<Flower[]>(`${environment.apiUrl}/flowers`);
+      }
+
+      findById(id: number): Observable<Flower> {
+        return this.client.get<Flower>(`${environment.apiUrl}/flowers/${id}`);
+      }
+
+      create(flower: Flower): Observable<Flower> {
+        return this.client.post<Flower>(
+          `${environment.apiUrl}/flowers`,
+          flower
+        );
+      }
+
+      update(flower: Flower): Observable<Flower> {
+        return this.client.put<Flower>(
+          `${environment.apiUrl}/flowers/${flower.id}`,
+          flower
+        );
+      }
+
+      delete(id: number) {
+        return this.client.delete<Flower>(
+          `${environment.apiUrl}/flowers/${id}`
+        );
+      }
+    }
+    ```
+
+    - Modificar el archivo `./src/app/shared/shared.module.ts` con el siguiente contenido:
+
+    ```typescript
+    import { CommonModule } from "@angular/common";
+    import { NgModule } from "@angular/core";
+    import { MatButtonModule } from "@angular/material/button";
+    import { MatToolbarModule } from "@angular/material/toolbar";
+    import { RouterModule } from "@angular/router";
+    import { NavComponent } from "./components/nav/nav.component";
+
+    import {
+      provideHttpClient,
+      withInterceptorsFromDi,
+    } from "@angular/common/http";
+    import { FlowersApiService } from "./services/flowers-api.service";
+
+    @NgModule({
+      declarations: [NavComponent],
+      imports: [
+        CommonModule,
+        MatToolbarModule,
+        RouterModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        MatInputModule,
+      ],
+      exports: [NavComponent],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        FlowersApiService,
+      ],
+    })
+    export class SharedModule {}
+    ```
+
+13. **Crear el Formulario de Registro de Flores**
+
+    - Modificar el archivo `./src/app/shared/shared.module.ts` con el siguiente contenido:
+
+    ```typescript
+    import { CommonModule } from "@angular/common";
+    import { NgModule } from "@angular/core";
+    import { ReactiveFormsModule } from "@angular/forms";
+    import { MatButtonModule } from "@angular/material/button";
+    import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
+    import { MatInputModule } from "@angular/material/input";
+    import { MatToolbarModule } from "@angular/material/toolbar";
+    import { RouterModule } from "@angular/router";
+    import { FlowersFormComponent } from "./components/flowers-form/flowers-form.component";
+    import { NavComponent } from "./components/nav/nav.component";
+
+    import {
+      provideHttpClient,
+      withInterceptorsFromDi,
+    } from "@angular/common/http";
+    import { FlowersApiService } from "./services/flowers-api.service";
+
+    @NgModule({
+      declarations: [NavComponent, FlowersFormComponent],
+      imports: [
+        CommonModule,
+        MatToolbarModule,
+        RouterModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        MatInputModule,
+      ],
+      exports: [NavComponent, FlowersFormComponent],
+      providers: [
+        {
+          provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+          useValue: { appearance: "outline" },
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        FlowersApiService,
+      ],
+    })
+    export class SharedModule {}
+    ```
+
+    - Modificar el archivo `./src/app/shared/components/flowers-form/flowers-form.component.ts` con el siguiente contenido:
+
+    ```typescript
+    import { Component, EventEmitter, Input, Output } from "@angular/core";
+    import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+    import { Flower } from "../../model/flower";
+
+    @Component({
+      selector: "app-flowers-form",
+      templateUrl: "./flowers-form.component.html",
+      styleUrl: "./flowers-form.component.css",
+    })
+    export class FlowersFormComponent {
+      flowersForm!: FormGroup;
+
+      @Input() set defaultValue(value: Flower) {
+        this.intilizeForm(value);
+      }
+
+      @Input() isEdit = false;
+
+      @Output()
+      onSubmit: EventEmitter<Flower> = new EventEmitter<Flower>();
+
+      constructor(private formBuilder: FormBuilder) {
+        this.intilizeForm();
+      }
+
+      intilizeForm(defaultValue?: Flower) {
+        const { name, color, imageUrl, price } = defaultValue || {
+          name: "",
+          color: "",
+          imageUrl: "",
+          price: 0,
         };
-        ```
 
-        - El archivo `environment.prod.ts` tendrá el siguiente contenido:
+        this.flowersForm = this.formBuilder.group({
+          name: [name, Validators.required],
+          color: [color, Validators.required],
+          imageUrl: [imageUrl, Validators.required],
+          price: [price, [Validators.required, Validators.min(1)]],
+        });
+      }
 
-        ```typescript
-        export const environment = {
-          production: true,
-          apiUrl: "http://localhost:18100",
-        };
-        ```
+      submit() {
+        if (this.flowersForm.valid) {
+          const { name, color, imageUrl, price } = this.flowersForm.value;
 
-        > Nota: A la hora de querer publicar tu aplicacion a internet debes modificar el `environment.prod.ts` para utilizar tu apiUrl con la ruta en internet. Ejemplo: `https://mi-dominio.com`
-
-    11. **Crear Servicio para la Comunicación con el Backend**
-
-        - Modificar el archivo `src/app/shared/services/flowers-api.service.ts` con el siguiente contenido:
-
-        ```typescript
-        import { HttpClient } from "@angular/common/http";
-        import { Injectable } from "@angular/core";
-        import { Observable } from "rxjs";
-        import { environment } from "../../../environments/environment";
-        import { Flower } from "../model/flower";
-
-        @Injectable({
-          providedIn: "root",
-        })
-        export class FlowersApiService {
-          constructor(private client: HttpClient) {}
-
-          findAll(): Observable<Flower[]> {
-            return this.client.get<Flower[]>(`${environment.apiUrl}/flowers`);
-          }
-
-          findById(id: number): Observable<Flower> {
-            return this.client.get<Flower>(
-              `${environment.apiUrl}/flowers/${id}`
-            );
-          }
-
-          create(flower: Flower): Observable<Flower> {
-            return this.client.post<Flower>(
-              `${environment.apiUrl}/flowers`,
-              flower
-            );
-          }
-
-          update(flower: Flower): Observable<Flower> {
-            return this.client.put<Flower>(
-              `${environment.apiUrl}/flowers/${flower.id}`,
-              flower
-            );
-          }
-
-          delete(id: number) {
-            return this.client.delete<Flower>(
-              `${environment.apiUrl}/flowers/${id}`
-            );
-          }
+          this.onSubmit.emit({ name, color, imageUrl, price });
         }
-        ```
+      }
+    }
+    ```
 
-        - Modificar el archivo `./src/app/shared/shared.module.ts` con el siguiente contenido:
+    - Modificar el archivo `./src/app/shared/components/flowers-form/flowers-form.component.html` con el siguiente contenido:
 
-        ```typescript
-        import { CommonModule } from "@angular/common";
-        import { NgModule } from "@angular/core";
-        import { MatButtonModule } from "@angular/material/button";
-        import { MatToolbarModule } from "@angular/material/toolbar";
-        import { RouterModule } from "@angular/router";
-        import { NavComponent } from "./components/nav/nav.component";
+    ```html
+    <form [formGroup]="flowersForm" (ngSubmit)="submit()">
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="name" />
+        <mat-error *ngIf="flowersForm.get('name')?.hasError('required')">
+          El nombre es obligatorio.
+        </mat-error>
+      </mat-form-field>
 
-        import {
-          provideHttpClient,
-          withInterceptorsFromDi,
-        } from "@angular/common/http";
-        import { FlowersApiService } from "./services/flowers-api.service";
+      <mat-form-field appearance="outline">
+        <mat-label>Color</mat-label>
+        <input matInput formControlName="color" />
+        <mat-error *ngIf="flowersForm.get('color')?.hasError('required')">
+          El color es obligatorio.
+        </mat-error>
+      </mat-form-field>
 
-        @NgModule({
-          declarations: [NavComponent],
-          imports: [
-            CommonModule,
-            MatToolbarModule,
-            RouterModule,
-            MatButtonModule,
-            ReactiveFormsModule,
-            MatInputModule,
-          ],
-          exports: [NavComponent],
-          providers: [
-            provideHttpClient(withInterceptorsFromDi()),
-            FlowersApiService,
-          ],
-        })
-        export class SharedModule {}
-        ```
+      <mat-form-field appearance="outline">
+        <mat-label>URL de la Imagen</mat-label>
+        <input matInput formControlName="imageUrl" />
+        <mat-error *ngIf="flowersForm.get('imageUrl')?.hasError('required')">
+          La URL de la imagen es obligatoria.
+        </mat-error>
+      </mat-form-field>
 
-    12. **Crear el Formulario de Registro de Flores**
+      <mat-form-field appearance="outline">
+        <mat-label>Precio</mat-label>
+        <input matInput formControlName="price" type="number" />
+        <mat-error *ngIf="flowersForm.get('price')?.hasError('required')">
+          El precio es obligatorio.
+        </mat-error>
+        <mat-error *ngIf="flowersForm.get('price')?.hasError('min')">
+          El precio debe ser mayor a 0.
+        </mat-error>
+      </mat-form-field>
 
-        - Modificar el archivo `./src/app/shared/shared.module.ts` con el siguiente contenido:
+      <button mat-raised-button color="primary" type="submit">
+        {{ isEdit ? 'Actualizar' : 'Registrar' }}
+      </button>
+    </form>
+    ```
 
-        ```typescript
-        import { CommonModule } from "@angular/common";
-        import { NgModule } from "@angular/core";
-        import { ReactiveFormsModule } from "@angular/forms";
-        import { MatButtonModule } from "@angular/material/button";
-        import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
-        import { MatInputModule } from "@angular/material/input";
-        import { MatToolbarModule } from "@angular/material/toolbar";
-        import { RouterModule } from "@angular/router";
-        import { FlowersFormComponent } from "./components/flowers-form/flowers-form.component";
-        import { NavComponent } from "./components/nav/nav.component";
-
-        import {
-          provideHttpClient,
-          withInterceptorsFromDi,
-        } from "@angular/common/http";
-        import { FlowersApiService } from "./services/flowers-api.service";
-
-        @NgModule({
-          declarations: [NavComponent, FlowersFormComponent],
-          imports: [
-            CommonModule,
-            MatToolbarModule,
-            RouterModule,
-            MatButtonModule,
-            ReactiveFormsModule,
-            MatInputModule,
-          ],
-          exports: [NavComponent, FlowersFormComponent],
-          providers: [
-            {
-              provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-              useValue: { appearance: "outline" },
-            },
-            provideHttpClient(withInterceptorsFromDi()),
-            FlowersApiService,
-          ],
-        })
-        export class SharedModule {}
-        ```
-
-        - Modificar el archivo `./src/app/shared/components/flowers-form/flowers-form.component.ts` con el siguiente contenido:
-
-        ```typescript
-        import { Component, EventEmitter, Input, Output } from "@angular/core";
-        import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-        import { Flower } from "../../model/flower";
-
-        @Component({
-          selector: "app-flowers-form",
-          templateUrl: "./flowers-form.component.html",
-          styleUrl: "./flowers-form.component.css",
-        })
-        export class FlowersFormComponent {
-          flowersForm!: FormGroup;
-
-          @Input() set defaultValue(value: Flower) {
-            this.intilizeForm(value);
-          }
-
-          @Input() isEdit = false;
-
-          @Output()
-          onSubmit: EventEmitter<Flower> = new EventEmitter<Flower>();
-
-          constructor(private formBuilder: FormBuilder) {
-            this.intilizeForm();
-          }
-
-          intilizeForm(defaultValue?: Flower) {
-            const { name, color, imageUrl, price } = defaultValue || {
-              name: "",
-              color: "",
-              imageUrl: "",
-              price: 0,
-            };
-
-            this.flowersForm = this.formBuilder.group({
-              name: [name, Validators.required],
-              color: [color, Validators.required],
-              imageUrl: [imageUrl, Validators.required],
-              price: [price, [Validators.required, Validators.min(1)]],
-            });
-          }
-
-          submit() {
-            if (this.flowersForm.valid) {
-              const { name, color, imageUrl, price } = this.flowersForm.value;
-
-              this.onSubmit.emit({ name, color, imageUrl, price });
-            }
-          }
-        }
-        ```
-
-        - Modificar el archivo `./src/app/shared/components/flowers-form/flowers-form.component.html` con el siguiente contenido:
-
-        ```html
-        <form [formGroup]="flowersForm" (ngSubmit)="submit()">
-          <mat-form-field appearance="outline">
-            <mat-label>Nombre</mat-label>
-            <input matInput formControlName="name" />
-            <mat-error *ngIf="flowersForm.get('name')?.hasError('required')">
-              El nombre es obligatorio.
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Color</mat-label>
-            <input matInput formControlName="color" />
-            <mat-error *ngIf="flowersForm.get('color')?.hasError('required')">
-              El color es obligatorio.
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>URL de la Imagen</mat-label>
-            <input matInput formControlName="imageUrl" />
-            <mat-error
-              *ngIf="flowersForm.get('imageUrl')?.hasError('required')"
-            >
-              La URL de la imagen es obligatoria.
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Precio</mat-label>
-            <input matInput formControlName="price" type="number" />
-            <mat-error *ngIf="flowersForm.get('price')?.hasError('required')">
-              El precio es obligatorio.
-            </mat-error>
-            <mat-error *ngIf="flowersForm.get('price')?.hasError('min')">
-              El precio debe ser mayor a 0.
-            </mat-error>
-          </mat-form-field>
-
-          <button mat-raised-button color="primary" type="submit">
-            {{ isEdit ? 'Actualizar' : 'Registrar' }}
-          </button>
-        </form>
-        ```
-
-11. **Página de Creación de Flores**
+14. **Página de Creación de Flores**
 
     - Vamos a crear la página para registrar flores. Modificamos el archivo `./src/app/pages/flowers-create-page/flowers-create-page.component.ts` con el siguiente contenido:
 
@@ -973,7 +970,7 @@ CREATE TABLE IF NOT EXISTS flower.flowers
       - `<h1>Registrar flor</h1>`: Título de la página.
       - `<app-flowers-form (onSubmit)="onSubmit($event)"></app-flowers-form>`: Utiliza el componente `FlowersFormComponent` y maneja el evento `onSubmit` para crear una nueva flor.
 
-12. **Crear Componente Flower Card**
+15. **Crear Componente Flower Card**
 
 - Modificar el archivo `./src/app/shared/shared.module.ts` para declarar y exportar el componente `FlowerCardComponent`:
 
@@ -1102,7 +1099,7 @@ CREATE TABLE IF NOT EXISTS flower.flowers
   - `.flower-card__image`: Este estilo asegura que la imagen de la flor se ajuste correctamente dentro de su contenedor, manteniendo la proporción original y evitando que se distorsione.
   - La propiedad `object-fit: contain` hace que la imagen se escale para caber dentro del contenedor sin recortarse, mientras que `height: 200px` establece una altura fija para la imagen.
 
-13. **Página de Listado de Flores**
+16. **Página de Listado de Flores**
 
 - Modificar el archivo `./src/app/pages/flowers-list-page/flowers-list-page.component.ts` con el siguiente contenido:
 
@@ -1226,7 +1223,7 @@ CREATE TABLE IF NOT EXISTS flower.flowers
 
     Esto es útil para mostrar tarjetas de flores en un diseño de cuadrícula adaptable.
 
-14. **Página de Edición de Flores**
+17. **Página de Edición de Flores**
 
 - Modificar el archivo `./src/app/pages/flowers-edit-page/flowers-edit-page.component.ts` con el siguiente contenido:
 
